@@ -22,4 +22,13 @@ public class Student extends User {
 
     @OneToMany(mappedBy = "exam_id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Exam> examList;
+
+    //probablemente tendríamos que poner que la relación es many to many
+//    @ManyToMany
+//    @JoinTable(
+//            name = "student_exam",
+//            joinColumns = @JoinColumn(name = "student_id"),
+//            inverseJoinColumns = @JoinColumn(name = "exam_id")
+//    )
+//    private List<Exam> examList;
 }
