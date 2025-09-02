@@ -15,20 +15,16 @@ import java.util.List;
 public class Student extends User {
 
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Score averageScore;
 
     private Long experienceLevel;
 
-    @OneToMany(mappedBy = "exam_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "student_exam",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "exam_id")
+    )
     private List<Exam> examList;
-
-    //probablemente tendríamos que poner que la relación es many to many
-//    @ManyToMany
-//    @JoinTable(
-//            name = "student_exam",
-//            joinColumns = @JoinColumn(name = "student_id"),
-//            inverseJoinColumns = @JoinColumn(name = "exam_id")
-//    )
-//    private List<Exam> examList;
 }

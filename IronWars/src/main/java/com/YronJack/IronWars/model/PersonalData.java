@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Embeddable
+@Data
 public class PersonalData {
 
     @NotBlank(message = "The field name is necessary")
