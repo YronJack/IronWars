@@ -1,5 +1,6 @@
 package com.YronJack.IronWars.service.impl;
 
+import com.YronJack.IronWars.util.customException.ResourceNotFoundException;
 import com.YronJack.IronWars.dto.student.StudentMinimalResponseDTO;
 import com.YronJack.IronWars.dto.student.StudentRequestDTO;
 import com.YronJack.IronWars.dto.student.StudentResponseDTO;
@@ -27,9 +28,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Optional<StudentMinimalResponseDTO> getStudentById(Long id) {
-        return studentRepository.findById(id)
-                .map(this::mapToMinimalResponseDTO);
+    public StudentMinimalResponseDTO getStudentById(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
+        return mapToMinimalResponseDTO(student);
     }
 
     @Override
@@ -46,17 +48,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponseDTO updateStudent(Long id, Student studentUpdate) {
-        Optional<Student> optionalStudent = studentRepository.findById(id)
+        Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
-        if (optionalStudent.isEmpty()) {
-            // Maneja el caso de no encontrado, lanza excepción o retorna null
-            return null;
-        }
-        Student student = optionalStudent.get();
+
         student.setNickName(studentUpdate.getNickName());
         student.setAverageScore(studentUpdate.getAverageScore());
         student.setExperienceLevel(studentUpdate.getExperienceLevel());
-        student.setExamList();
+        student.setExamList(studentUpdate.getExamList());
 
         Student updatedStudent = studentRepository.save(student);
         return mapToResponseDTO(updatedStudent);
@@ -64,6 +62,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(Long id) {
+        if (!studentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Estudiante no encontrado con id: " + id);
+        }
+        studentRepository.deleteById(id);
 
     }
 
@@ -73,6 +75,35 @@ public class StudentServiceImpl implements StudentService {
                 .stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+
+    public List<StudentMinimalResponseDTO> getAllStudentsMinimal() {
+        return studentRepository.findAll()
+                .stream()
+                .map(this::mapToMinimalResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public StudentResponseDTO addExamToStudent(Long studentId, Long examId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+        Exam exam = examRepository.findById(examId)
+                .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
+        List<Exam> exams = student.getExamList();
+        if (exams.stream().anyMatch(e -> e.getId().equals(examId))) {
+            throw new IllegalArgumentException("El examen ya está asociado al estudiante");
+        }
+        exams.add(exam);
+        student.setExamList(exams);
+        Student updatedStudent = studentRepository.save(student);
+        return mapToResponseDTO(updatedStudent);
+    }
+
+    public StudentResponseDTO getAllExamsByStudentId(Long studentId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+        return mapToResponseDTO(student);
     }
 
     private StudentResponseDTO mapToResponseDTO(Student student) {
@@ -100,4 +131,6 @@ public class StudentServiceImpl implements StudentService {
         dto.setExamList(student.getExamList());
         return dto;
     }
+
+
 }
