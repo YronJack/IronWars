@@ -1,4 +1,4 @@
 package com.YronJack.IronWars.repository;
 
-public class ExerciseRepository {
+public interface ExerciseRepository {
 }

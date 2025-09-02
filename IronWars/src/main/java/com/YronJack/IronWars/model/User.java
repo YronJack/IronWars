@@ -22,7 +22,7 @@ public abstract class  User {
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 100, message = "The password hasn't contained more than 100 characters")
     @Column(nullable = false, length = 100)
-    private Long password;
+    private String password;
 
     @Embedded
     private PersonalData personalData;
