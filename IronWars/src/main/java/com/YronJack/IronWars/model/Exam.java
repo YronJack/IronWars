@@ -13,6 +13,8 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer exam_id;
 
+    adsfa
+
     @ManyToMany(mappedBy = "exams")
     private List<Student> students;
 }
