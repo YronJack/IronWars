@@ -21,6 +21,10 @@ public class ExamServiceImpl implements ExamService {
         return exam;
     }
 
+    public List<Exam> getAllExams() {
+        return examRepository.findAll();
+    }
+
     @Override
     public Exam createExam(Exam examRequest) {
         return examRepository.save(examRequest);
