@@ -20,11 +20,6 @@ public class Student extends User {
 
     private Long experienceLevel;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "student_exam",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "exam_id")
-    )
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Exam> examList;
 }
