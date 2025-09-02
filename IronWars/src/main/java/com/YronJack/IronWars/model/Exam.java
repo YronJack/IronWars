@@ -4,9 +4,10 @@ import com.YronJack.IronWars.unums.Score;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static java.time.LocalTime.now;
@@ -38,9 +39,9 @@ public class Exam {
     private Student student;
 
 
-    private Timestamp startTime;
+    private LocalTime startTime;
 
-    private Timestamp endTime;
+    private LocalTime endTime;
     @NotNull(message = "Duration is mandatory")
     private Duration duration;
 
@@ -51,8 +52,10 @@ public class Exam {
     public Exam (Language language, Student student) {
         this.language = language;
         this.student = student;
+        this.endTime = null;
         this.startTime = now();
         this.duration = Duration.ofMinutes(20);
+
 
     }
 }
