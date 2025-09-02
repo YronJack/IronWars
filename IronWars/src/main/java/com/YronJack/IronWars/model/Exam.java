@@ -1,3 +1,5 @@
+package com.YronJack.IronWars.model;
+
 import com.YronJack.IronWars.unums.Score;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
