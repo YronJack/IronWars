@@ -100,10 +100,11 @@ public class StudentServiceImpl implements StudentService {
         return mapToResponseDTO(updatedStudent);
     }
 
-    public StudentResponseDTO getAllExamsByStudentId(Long studentId) {
+    public List<Exams> getAllExamsByStudentId(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
-        return mapToResponseDTO(student);
+
+        return student.getExamList();
     }
 
     private StudentResponseDTO mapToResponseDTO(Student student) {

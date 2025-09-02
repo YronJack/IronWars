@@ -14,4 +14,8 @@ public interface StudentService {
     StudentResponseDTO updateStudent(Long id, Student studentUpdate);
     void deleteStudent(Long id);
     List<StudentResponseDTO> getStudentAllStudents();
+    List<Exam> getAllExamsByStudentId(Long studentId);
+    Exam addExamToStudent(Long studentId, Exam exam);
+    void removeExamFromStudent(Long studentId, Long examId);
+    Exam getExamById(Long studentId, Long examId);
 }
