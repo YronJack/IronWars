@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.security.Timestamp;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.time.LocalTime.now;
 
 
 @Entity
@@ -44,4 +47,12 @@ public class Exam {
     @Enumerated(EnumType.STRING)
     private Score score;
 
+
+    public Exam (Language language, Student student) {
+        this.language = language;
+        this.student = student;
+        this.startTime = now();
+        this.duration = Duration.ofMinutes(20);
+
+    }
 }
