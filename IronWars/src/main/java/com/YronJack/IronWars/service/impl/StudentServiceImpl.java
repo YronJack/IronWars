@@ -9,7 +9,6 @@ import com.YronJack.IronWars.repository.ExamRepository;
 import com.YronJack.IronWars.repository.StudentRepository;
 import com.YronJack.IronWars.service.interfaces.StudentService;
 import com.YronJack.IronWars.unums.Score;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,15 +32,34 @@ public class StudentServiceImpl implements StudentService {
                 .map(this::mapToMinimalResponseDTO);
     }
 
-
     @Override
-    public StudentResponseDTO createStudent(StudentRequestDTO studentRequest) {
-        return studentRepository.save(studentRequest);
+    public StudentResponseDTO createStudent(Student studentRequest) {
+        Student student = new Student();
+        student.setNickName(studentRequest.getNickName());
+        student.setAverageScore(Score.Null);
+        student.setExperienceLevel(0L);
+        // No asignar examList, quedará vacío o null
+
+        Student savedStudent = studentRepository.save(student);
+        return mapToResponseDTO(savedStudent);
     }
 
     @Override
-    public StudentResponseDTO updateStudent(Long id, Exam studentUpdate) {
-        return null;
+    public StudentResponseDTO updateStudent(Long id, Student studentUpdate) {
+        Optional<Student> optionalStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
+        if (optionalStudent.isEmpty()) {
+            // Maneja el caso de no encontrado, lanza excepción o retorna null
+            return null;
+        }
+        Student student = optionalStudent.get();
+        student.setNickName(studentUpdate.getNickName());
+        student.setAverageScore(studentUpdate.getAverageScore());
+        student.setExperienceLevel(studentUpdate.getExperienceLevel());
+        student.setExamList();
+
+        Student updatedStudent = studentRepository.save(student);
+        return mapToResponseDTO(updatedStudent);
     }
 
     @Override

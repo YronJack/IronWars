@@ -5,5 +5,6 @@ public enum Score {
     Good,
     Satisfactory,
     Poor,
-    Fail;
+    Fail,
+    Null
 }
