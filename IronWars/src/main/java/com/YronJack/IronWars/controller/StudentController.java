@@ -42,5 +42,6 @@ public class StudentController {
         return ResponseEntity.ok(created);
     }
 
+
     // Métodos update y delete no implementados en el servicio, por lo que se omiten aquí.
 }
