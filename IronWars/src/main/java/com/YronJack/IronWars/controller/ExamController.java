@@ -46,10 +46,6 @@ public class ExamController {
         return ResponseEntity.notFound().build();
     }
 
-@GetMapping("exam/list_of_Exams/{student_Id}")
-    public List<Exam> getExamsByStudent(@PathVariable Long studentId){
-        return examService.getExamsByStudent(studentId);
-}
 
 
 

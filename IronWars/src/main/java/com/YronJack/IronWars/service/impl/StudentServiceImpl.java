@@ -12,6 +12,7 @@ import com.YronJack.IronWars.unums.Score;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,6 +52,25 @@ public class StudentServiceImpl implements StudentService {
         student.setNickName(studentUpdate.getNickName());
         student.setAverageScore(studentUpdate.getAverageScore());
         student.setExperienceLevel(studentUpdate.getExperienceLevel());
+
+        if (student.getPersonalData() != null && studentUpdate.getPersonalData() != null) {
+            if (studentUpdate.getPersonalData().getName() != null) {
+                student.getPersonalData().setName(studentUpdate.getPersonalData().getName());
+            }
+            if (studentUpdate.getPersonalData().getLastName() != null) {
+                student.getPersonalData().setLastName(studentUpdate.getPersonalData().getLastName());
+            }
+            if (studentUpdate.getPersonalData().getAddress() != null) {
+                student.getPersonalData().setAddress(studentUpdate.getPersonalData().getAddress());
+            }
+            if (studentUpdate.getPersonalData().getEmail() != null) {
+                student.getPersonalData().setEmail(studentUpdate.getPersonalData().getEmail());
+            }
+            if (studentUpdate.getPersonalData().getPhone() != null) {
+                student.getPersonalData().setPhone(studentUpdate.getPersonalData().getPhone());
+            }
+        }
+
         student.setExamList(studentUpdate.getExamList());
         Student updatedStudent = studentRepository.save(student);
         return mapToResponseDTO(updatedStudent);
@@ -111,6 +131,8 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.save(student);
     }
 
+
+
     @Override
     public List<Exam> getAllExamsByStudentId(Long studentId) {
         Student student = studentRepository.findById(studentId)
@@ -118,15 +140,7 @@ public class StudentServiceImpl implements StudentService {
         return student.getExamList();
     }
 
-    @Override
-    public Exam getExamById(Long studentId, Long examId) {
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
-        return student.getExamList().stream()
-                .filter(exam -> exam.getExam_id().equals(examId))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
-    }
+
 
     // --- Métodos utilitarios privados ---
 

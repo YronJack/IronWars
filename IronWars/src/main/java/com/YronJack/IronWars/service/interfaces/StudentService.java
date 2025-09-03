@@ -11,16 +11,12 @@ import java.util.Optional;
 public interface StudentService {
     StudentMinimalResponseDTO getStudentById(Long id);
     StudentResponseDTO createStudent(Student studentRequest);
-    StudentResponseDTO updateStudent(Long id, Student studentUpdate);
     void deleteStudent(Long id);
     List<StudentResponseDTO> getStudentAllStudents();
     List<Exam> getAllExamsByStudentId(Long studentId);
-//    Exam addExamToStudent(Long studentId, Exam exam);
-
     List<StudentMinimalResponseDTO> getAllStudentsMinimal();
-
     StudentResponseDTO addExamToStudent(Long studentId, Long examId);
-
     void removeExamFromStudent(Long studentId, Long examId);
-    Exam getExamById(Long studentId, Long examId);
+    StudentResponseDTO updateStudent(Long id, Student studentUpdate);
+
 }

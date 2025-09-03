@@ -50,5 +50,5 @@ public class ExamServiceImpl implements ExamService {
 
     }
 
-    public List<Exam> getExamsByStudent(Long studentId) { return examRepository.findExamByStudent_Id(studentId); }
+
 }

@@ -43,7 +43,7 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher create(Teacher teacher) {
         if (teacher.getPersonalData() != null
                 && teacher.getPersonalData().getName() != null
-                && teacherRepository.existsByPersonalData_Name((teacher.getPersonalData().getName())) {
+                && teacherRepository.existsByPersonalData_Name(teacher.getPersonalData().getName())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Name already in use");
         }
         if (teacher.getPersonalData() != null
