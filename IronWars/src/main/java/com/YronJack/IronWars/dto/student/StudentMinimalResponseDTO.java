@@ -1,5 +1,6 @@
 package com.YronJack.IronWars.dto.student;
 
+import com.YronJack.IronWars.enums.ExperienceLevel;
 import com.YronJack.IronWars.model.Exam;
 import com.YronJack.IronWars.enums.Score;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +17,10 @@ public class StudentMinimalResponseDTO {
 
     private Score averageScore;
 
-    private Long experienceLevel;
+    private ExperienceLevel experienceLevel;
 
     private List<Exam> examList;
+
+
+
 }

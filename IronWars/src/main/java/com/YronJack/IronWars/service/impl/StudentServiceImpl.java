@@ -32,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = new Student();
         student.setNickName(studentRequest.getNickName());
         student.setAverageScore(Score.Null);
-        student.setExperienceLevel(0L);
+        student.setExperienceLevel(studentRequest.getExperienceLevel());
         Student savedStudent = studentRepository.save(student);
         return mapToResponseDTO(savedStudent);
     }
