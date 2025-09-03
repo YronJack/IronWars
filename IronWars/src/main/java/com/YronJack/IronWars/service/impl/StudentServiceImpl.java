@@ -1,7 +1,7 @@
 package com.YronJack.IronWars.service.impl;
 
+import com.YronJack.IronWars.util.customException.ResourceNotFoundException;
 import com.YronJack.IronWars.dto.student.StudentMinimalResponseDTO;
-import com.YronJack.IronWars.dto.student.StudentRequestDTO;
 import com.YronJack.IronWars.dto.student.StudentResponseDTO;
 import com.YronJack.IronWars.model.Exam;
 import com.YronJack.IronWars.model.Student;
@@ -9,11 +9,9 @@ import com.YronJack.IronWars.repository.ExamRepository;
 import com.YronJack.IronWars.repository.StudentRepository;
 import com.YronJack.IronWars.service.interfaces.StudentService;
 import com.YronJack.IronWars.unums.Score;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,30 +20,55 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final ExamRepository examRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository, ExamRepository examRepository){
+    public StudentServiceImpl(StudentRepository studentRepository, ExamRepository examRepository) {
         this.studentRepository = studentRepository;
         this.examRepository = examRepository;
     }
 
     @Override
-    public Optional<StudentMinimalResponseDTO> getStudentById(Long id) {
-        return studentRepository.findById(id)
-                .map(this::mapToMinimalResponseDTO);
+    public StudentMinimalResponseDTO getStudentById(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
+        return mapToMinimalResponseDTO(student); //devolvemos tipo " pelao" pero le decimos que quieremos
+        // OPional
+
     }
 
 
+
+
     @Override
-    public StudentResponseDTO createStudent(StudentRequestDTO studentRequest) {
-        return studentRepository.save(studentRequest);
+    public StudentResponseDTO createStudent(Student studentRequest) {
+        Student student = new Student();
+        student.setNickName(studentRequest.getNickName());
+        student.setAverageScore(Score.Null);
+        student.setExperienceLevel(0L);
+        // No asignar examList, quedará vacío o null
+
+        Student savedStudent = studentRepository.save(student);
+        return mapToResponseDTO(savedStudent);
     }
 
     @Override
-    public StudentResponseDTO updateStudent(Long id, Exam studentUpdate) {
-        return null;
+    public StudentResponseDTO updateStudent(Long id, Student studentUpdate) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
+
+        student.setNickName(studentUpdate.getNickName());
+        student.setAverageScore(studentUpdate.getAverageScore());
+        student.setExperienceLevel(studentUpdate.getExperienceLevel());
+        student.setExamList(studentUpdate.getExamList());
+
+        Student updatedStudent = studentRepository.save(student);
+        return mapToResponseDTO(updatedStudent);
     }
 
     @Override
     public void deleteStudent(Long id) {
+        if (!studentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Estudiante no encontrado con id: " + id);
+        }
+        studentRepository.deleteById(id);
 
     }
 
@@ -56,6 +79,69 @@ public class StudentServiceImpl implements StudentService {
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<StudentMinimalResponseDTO> getAllStudentsMinimal() {
+        return studentRepository.findAll()
+                .stream()
+                .map(this::mapToMinimalResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public StudentResponseDTO addExamToStudent(Long studentId, Long examId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+        Exam exam = examRepository.findById(examId)
+                .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
+        List<Exam> exams = student.getExamList();
+        if (exams.stream().anyMatch(e -> e.getExam_id().equals(examId))) {
+            throw new IllegalArgumentException("El examen ya está asociado al estudiante");
+        }
+        exams.add(exam);
+        student.setExamList(exams);
+        Student updatedStudent = studentRepository.save(student);
+        return mapToResponseDTO(updatedStudent);
+    }
+
+    @Override
+    public void removeExamFromStudent(Long studentId, Long examId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+        List<Exam> exams = student.getExamList();
+        boolean removed = exams.removeIf(exam -> exam.getExam_id().equals(examId));
+        if (!removed) {
+            throw new ResourceNotFoundException("Examen no encontrado con id: " + examId + " para el estudiante");
+        }
+        student.setExamList(exams);
+        Student updatedStudent = studentRepository.save(student);
+
+    }
+
+    @Override
+    public List<Exam> getAllExamsByStudentId(Long studentId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+
+        return student.getExamList();
+    }
+
+//    @Override
+//    public Exam addExamToStudent(Long studentId, Exam exam) {
+//        return null;
+//    }
+
+    @Override
+    public Exam getExamById(Long studentId, Long examId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+        return student.getExamList().stream()
+                .filter(exam -> exam.getExam_id().equals(examId))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
+    }
+
+    //utili
 
     private StudentResponseDTO mapToResponseDTO(Student student) {
         StudentResponseDTO dto = new StudentResponseDTO();
@@ -82,4 +168,6 @@ public class StudentServiceImpl implements StudentService {
         dto.setExamList(student.getExamList());
         return dto;
     }
+
+
 }

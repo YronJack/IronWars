@@ -4,6 +4,8 @@ import com.YronJack.IronWars.unums.Score;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+
 import java.time.LocalDateTime;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -39,14 +41,19 @@ public class Exam {
     private Student student;
 
 
+
     private LocalTime startTime;
 
     private LocalTime endTime;
+
     @NotNull(message = "Duration is mandatory")
     private Duration duration;
 
     @Enumerated(EnumType.STRING)
     private Score score;
+
+
+
 
 
     public Exam (Language language, Student student) {
@@ -59,3 +66,4 @@ public class Exam {
 
     }
 }
+
