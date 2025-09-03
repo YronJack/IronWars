@@ -62,4 +62,12 @@ public class TeacherController {
     public TeacherResponseDTO removeLanguage(@PathVariable Long teacherId, @PathVariable Long languageId) {
         return TeacherResponseDTO.fromEntity(teacherService.removeLanguage(teacherId, languageId));
     }
+
+    @GetMapping ("/by-language/{languageId}")
+    public List<TeacherResponseDTO> getByLanguage(@PathVariable Long languageId) {
+        return teacherService.getByLanguage(languageId)
+                .stream()
+                .map(TeacherResponseDTO::fromEntity)
+                .toList();
+    }
 }

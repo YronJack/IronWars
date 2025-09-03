@@ -1,15 +1,17 @@
-package com.YronJack.IronWars.service;
+package com.YronJack.IronWars.service.interfaces;
 
 import com.YronJack.IronWars.dto.exercise.ExerciseRequestDTO;
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
-import com.YronJack.IronWars.entity.enums.Difficulty;
+
+import com.YronJack.IronWars.unums.Dificulty;
+
 import java.util.List;
 
 public interface ExerciseService {
     ExerciseResponseDTO createExercise(ExerciseRequestDTO exerciseRequestDTO);
     ExerciseResponseDTO getExerciseById(Long id);
     List<ExerciseResponseDTO> getAllExercises();
-    List<ExerciseResponseDTO> getExercisesByDifficulty(Difficulty difficulty);
+    List<ExerciseResponseDTO> getExercisesByDifficulty(Dificulty difficulty);
     List<ExerciseResponseDTO> getExercisesByLanguage(Long languageId);
     ExerciseResponseDTO updateExercise(Long id, ExerciseRequestDTO exerciseRequestDTO);
     void deleteExercise(Long id);

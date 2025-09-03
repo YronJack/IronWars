@@ -2,10 +2,11 @@ package com.YronJack.IronWars.controller;
 
 import com.YronJack.IronWars.dto.exercise.ExerciseRequestDTO;
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
-import com.YronJack.IronWars.entity.enums.Difficulty;
-import com.YronJack.IronWars.service.ExerciseService;
+import com.YronJack.IronWars.unums.Dificulty;
+import com.YronJack.IronWars.service.interfaces.ExerciseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExerciseController {
 
+    @Autowired
     private final ExerciseService exerciseService;
 
     @PostMapping
@@ -38,7 +40,7 @@ public class ExerciseController {
 
     @GetMapping("/difficulty/{difficulty}")
     public ResponseEntity<List<ExerciseResponseDTO>> getExercisesByDifficulty(
-            @PathVariable Difficulty difficulty) {
+            @PathVariable Dificulty difficulty) {
         List<ExerciseResponseDTO> exercises = exerciseService.getExercisesByDifficulty(difficulty);
         return ResponseEntity.ok(exercises);
     }
