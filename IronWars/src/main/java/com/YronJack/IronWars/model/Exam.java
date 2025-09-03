@@ -53,9 +53,6 @@ public class Exam {
     private Score score;
 
 
-
-
-
     public Exam (Language language, Student student) throws Exception {
         this.language = language;
         this.student = student;
@@ -63,7 +60,6 @@ public class Exam {
         this.startTime = now();
         this.duration = Duration.ofMinutes(20);
         this.exercises = new ArrayList<>();
-        this.exercises = Exercise.fillExamWithRandomExercises( student.getExperienceLevel(),language.getId());
     }
 }
 

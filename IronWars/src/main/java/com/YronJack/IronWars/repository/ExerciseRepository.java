@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     List<Exercise> findByDifficulty(Difficulty difficulty);
-    List<Exercise> findByLanguageId(Long languageId);
+    List<Exercise> findByLanguage_Id(Long languageId);
     List<Exercise> findByDifficultyAndLanguageId(Difficulty difficulty, Long languageId);
 }

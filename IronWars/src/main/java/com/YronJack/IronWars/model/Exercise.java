@@ -60,26 +60,4 @@ public class Exercise {
     }
 
 
-    public static List<Exercise> fillExamWithRandomExercises(ExperienceLevel experienceLevel, Long languageId) throws Exception {
-        ExerciseServiceImpl service = new ExerciseServiceImpl();
-        Random rand = new Random();
-        Difficulty difficulty = Difficulty.valueOf(experienceLevel.toString());
-        List<Exercise> randomExercises = service.getExercisesByDifficultyAndLanguageId(difficulty, languageId);
-
-        if (randomExercises.isEmpty()) {
-            throw new Exception("No exercises found");
-        }
-
-        List<Exercise> examReady = new ArrayList<>();
-        List<Exercise> copyList = new ArrayList<>(randomExercises);
-
-        int count = Math.min(10, copyList.size());
-        for (int i = 0; i < count; i++) {
-            int index = rand.nextInt(copyList.size());
-            examReady.add(copyList.remove(index));
-        }
-
-        return examReady;
-    }
-
 }
