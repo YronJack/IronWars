@@ -70,9 +70,9 @@ public class StudentController {
     @Operation(summary = "Create a new student")
     @ApiResponse(responseCode = "200", description = "Student created successfully")
     @PostMapping
-    public ResponseEntity<StudentResponseDTO> createStudent(
+    public ResponseEntity<Student> createStudent(
             @Valid @RequestBody Student student) {
-        StudentResponseDTO created = studentService.createStudent(student);
+        Student created = studentService.createStudent(student);
         return ResponseEntity.ok(created);
     }
 

@@ -20,7 +20,7 @@ public abstract class  User {
     @Size(max = 100, message = "Nickname hasn't contained more than 100 characters")
     private String nickName;
 
-    @NotBlank(message = "Password is required")
+
     @Size(min = 8, max = 100, message = "The password hasn't contained more than 100 characters")
     @Column(nullable = false, length = 100)
     private String password;

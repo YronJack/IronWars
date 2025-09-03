@@ -117,13 +117,13 @@ public class DataLoader implements CommandLineRunner {
             /* exam1.setTitle("Java Basic Exam"); */
             exam1.setLanguage(language1);
             /* exam1.setTeacher(teacher1);*/
-            exam1.setDuration(Duration.ofMinutes(20));
+            exam1.setDuration(20);
             exam1.setExercises(new ArrayList<>(List.of(exercise1)));
 
             Exam exam2 = new Exam();
             /* exam2.setTitle("JS Basic Exam");*/
             exam2.setLanguage(language2);
-            exam2.setDuration(Duration.ofMinutes(20));
+            exam2.setDuration(20);
 
             /*exam2.setTeacher(teacher2);*/
             exam2.setExercises(new ArrayList<>(List.of(exercise2)));
@@ -141,7 +141,7 @@ public class DataLoader implements CommandLineRunner {
             student1.setAverageScore(Score.Satisfactory);
             student1.setExperienceLevel(ExperienceLevel.Beginner);
             student1.setExamList(new ArrayList<>(List.of(exam1)));
-            student1.setTeacher(teacher1);
+
 
             Student student2 = new Student();
             student2.setNickName("janeRoe");
@@ -152,7 +152,7 @@ public class DataLoader implements CommandLineRunner {
             student2.setAverageScore(Score.Fail);
             student2.setExperienceLevel(ExperienceLevel.Beginner);
             student2.setExamList(new ArrayList<>(List.of(exam2)));
-            student2.setTeacher(teacher2);
+
 
             studentRepository.save(student1);
             studentRepository.save(student2);

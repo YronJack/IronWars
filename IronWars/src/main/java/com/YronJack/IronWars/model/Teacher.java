@@ -25,9 +25,6 @@ public class Teacher extends User {
     @JsonIgnore
     private List<Language> languages;
 
-    //Alumnos tutorizados
-    @OneToMany(mappedBy = "teacher")
-    private List <Student> students;
 
 
 }

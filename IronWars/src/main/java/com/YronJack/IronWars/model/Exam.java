@@ -33,7 +33,7 @@ public class Exam {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "language_id") // o el nombre de la columna FK
-    @NotNull(message= "The Language is mandatory")
+
     private Language language;
 
     @ManyToOne
@@ -47,7 +47,7 @@ public class Exam {
     private LocalTime endTime;
 
     @NotNull(message = "Duration is mandatory")
-    private Duration duration;
+    private int duration;
 
     @Enumerated(EnumType.STRING)
     private Score score;
@@ -58,7 +58,7 @@ public class Exam {
         this.student = student;
         this.endTime = null;
         this.startTime = now();
-        this.duration = Duration.ofMinutes(20);
+        this.duration = 60;
         this.exercises = new ArrayList<>();
     }
 }

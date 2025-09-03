@@ -28,13 +28,15 @@ public class StudentServiceImpl implements StudentService {
     // --- CRUD Student ---
 
     @Override
-    public StudentResponseDTO createStudent(Student studentRequest) {
+    public Student createStudent(Student studentRequest) {
         Student student = new Student();
         student.setNickName(studentRequest.getNickName());
         student.setAverageScore(Score.Null);
         student.setExperienceLevel(studentRequest.getExperienceLevel());
+        student.setPassword(studentRequest.getPassword());
+        student.setPersonalData(studentRequest.getPersonalData());
         Student savedStudent = studentRepository.save(student);
-        return mapToResponseDTO(savedStudent);
+        return savedStudent;
     }
 
     @Override
