@@ -1,6 +1,6 @@
 package com.YronJack.IronWars.model;
 
-import com.YronJack.IronWars.enums.Dificulty;
+import com.YronJack.IronWars.enums.Difficulty;
 import com.YronJack.IronWars.enums.Score;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -31,8 +31,8 @@ public class Exam {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Exercise> exercises;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Column(nullable = false, length =50)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "language_id") // o el nombre de la columna FK
     @NotNull(message= "The Language is mandatory")
     private Language language;
 
@@ -40,7 +40,7 @@ public class Exam {
     private Student student;
 
     @Enumerated(EnumType.STRING)
-    private Dificulty dificulty;
+    private Difficulty dificulty;
 
     private LocalTime startTime;
 

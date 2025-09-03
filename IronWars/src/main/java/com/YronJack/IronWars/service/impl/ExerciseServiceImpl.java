@@ -6,7 +6,7 @@ import com.YronJack.IronWars.enums.ExperienceLevel;
 import com.YronJack.IronWars.model.Exercise;
 import com.YronJack.IronWars.repository.ExerciseRepository;
 import com.YronJack.IronWars.service.interfaces.ExerciseService;
-import com.YronJack.IronWars.enums.Dificulty;
+import com.YronJack.IronWars.enums.Difficulty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public List<ExerciseResponseDTO> getExercisesByDifficulty(Dificulty difficulty) {
+    public List<ExerciseResponseDTO> getExercisesByDifficulty(Difficulty difficulty) {
         return List.of();
     }
 
@@ -56,14 +56,14 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public List<Exercise> getExercisesByDifficultyAndLanguageId(Dificulty difficulty, Long languageId) {
+    public List<Exercise> getExercisesByDifficultyAndLanguageId(Difficulty difficulty, Long languageId) {
         return exerciseRepository.findByDifficultyAndLanguageId(difficulty, languageId);
     }
 
     public static List<Exercise> fillExamWithRandomExercises(ExperienceLevel experienceLevel, Long languageId) throws Exception {
         ExerciseServiceImpl service = new ExerciseServiceImpl();
         Random rand = new Random();
-        Dificulty difficulty = Dificulty.valueOf(experienceLevel.toString());
+        Difficulty difficulty = Difficulty.valueOf(experienceLevel.toString());
         List<Exercise> randomExercises = service.getExercisesByDifficultyAndLanguageId(difficulty, languageId);
 
         if (randomExercises.isEmpty()) {

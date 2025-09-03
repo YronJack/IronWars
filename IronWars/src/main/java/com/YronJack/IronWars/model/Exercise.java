@@ -1,17 +1,12 @@
 package com.YronJack.IronWars.model;
 
-import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
-import com.YronJack.IronWars.enums.Dificulty;
+import com.YronJack.IronWars.enums.Difficulty;
 
 import com.YronJack.IronWars.enums.ExperienceLevel;
-import com.YronJack.IronWars.repository.ExerciseRepository;
 import com.YronJack.IronWars.service.impl.ExerciseServiceImpl;
-import com.YronJack.IronWars.service.interfaces.ExerciseService;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.http.ResponseEntity;
 
-import java.lang.reflect.AnnotatedArrayType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +34,7 @@ public class Exercise {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Dificulty dificulty;
+    private Difficulty difficulty;
 
     @ManyToOne
     @JoinColumn(name = "language_id", nullable = false)
@@ -68,7 +63,7 @@ public class Exercise {
     public static List<Exercise> fillExamWithRandomExercises(ExperienceLevel experienceLevel, Long languageId) throws Exception {
         ExerciseServiceImpl service = new ExerciseServiceImpl();
         Random rand = new Random();
-        Dificulty difficulty = Dificulty.valueOf(experienceLevel.toString());
+        Difficulty difficulty = Difficulty.valueOf(experienceLevel.toString());
         List<Exercise> randomExercises = service.getExercisesByDifficultyAndLanguageId(difficulty, languageId);
 
         if (randomExercises.isEmpty()) {

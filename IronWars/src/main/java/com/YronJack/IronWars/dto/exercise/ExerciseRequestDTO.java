@@ -1,6 +1,6 @@
 package com.YronJack.IronWars.dto.exercise;
 
-import com.YronJack.IronWars.enums.Dificulty;
+import com.YronJack.IronWars.enums.Difficulty;
 import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +20,7 @@ public class ExerciseRequestDTO {
     private String solution;
 
     @NotNull(message = "Difficulty is required")
-    private Dificulty difficulty;
+    private Difficulty difficulty;
 
     @NotNull(message = "Language ID is required")
     private Long languageId;
