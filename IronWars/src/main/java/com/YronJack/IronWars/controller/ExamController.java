@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/exams")
+@RequestMapping("/api/exams")
 public class ExamController {
     @Autowired
     private ExamServiceImpl examService;
