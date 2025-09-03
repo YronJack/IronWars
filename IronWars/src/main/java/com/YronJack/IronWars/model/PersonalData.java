@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class PersonalData {
 

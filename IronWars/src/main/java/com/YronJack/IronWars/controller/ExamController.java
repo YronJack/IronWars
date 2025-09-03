@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/exams")
+
 public class ExamController {
     @Autowired
     private ExamServiceImpl examService;
