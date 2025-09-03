@@ -2,7 +2,6 @@ package com.YronJack.IronWars.service.impl;
 
 import com.YronJack.IronWars.util.customException.ResourceNotFoundException;
 import com.YronJack.IronWars.dto.student.StudentMinimalResponseDTO;
-import com.YronJack.IronWars.dto.student.StudentRequestDTO;
 import com.YronJack.IronWars.dto.student.StudentResponseDTO;
 import com.YronJack.IronWars.model.Exam;
 import com.YronJack.IronWars.model.Student;
@@ -13,7 +12,6 @@ import com.YronJack.IronWars.unums.Score;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,16 +29,13 @@ public class StudentServiceImpl implements StudentService {
     public StudentMinimalResponseDTO getStudentById(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
-        return mapToMinimalResponseDTO(student);
+        return mapToMinimalResponseDTO(student); //devolvemos tipo " pelao" pero le decimos que quieremos
+        // OPional
 
     }
 
-    @Override
-    public StudentResponseDTO createStudent(Student student) {
-        Student savedStudent = studentRepository.save(student);
-        return mapToResponseDTO(savedStudent);
 
-    }
+
 
     @Override
     public StudentResponseDTO createStudent(Student studentRequest) {
@@ -100,7 +95,7 @@ public class StudentServiceImpl implements StudentService {
         Exam exam = examRepository.findById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
         List<Exam> exams = student.getExamList();
-        if (exams.stream().anyMatch(e -> e.getId().equals(examId))) {
+        if (exams.stream().anyMatch(e -> e.getExam_id().equals(examId))) {
             throw new IllegalArgumentException("El examen ya está asociado al estudiante");
         }
         exams.add(exam);
@@ -110,17 +105,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO removeExamFromStudent(Long studentId, Long examId) {
+    public void removeExamFromStudent(Long studentId, Long examId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
         List<Exam> exams = student.getExamList();
-        boolean removed = exams.removeIf(exam -> exam.getId().equals(examId));
+        boolean removed = exams.removeIf(exam -> exam.getExam_id().equals(examId));
         if (!removed) {
             throw new ResourceNotFoundException("Examen no encontrado con id: " + examId + " para el estudiante");
         }
         student.setExamList(exams);
         Student updatedStudent = studentRepository.save(student);
-        return mapToResponseDTO(updatedStudent);
+
     }
 
     @Override
@@ -131,12 +126,17 @@ public class StudentServiceImpl implements StudentService {
         return student.getExamList();
     }
 
+//    @Override
+//    public Exam addExamToStudent(Long studentId, Exam exam) {
+//        return null;
+//    }
+
     @Override
     public Exam getExamById(Long studentId, Long examId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
         return student.getExamList().stream()
-                .filter(exam -> exam.getId().equals(examId))
+                .filter(exam -> exam.getExam_id().equals(examId))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
     }
