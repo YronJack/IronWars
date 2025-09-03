@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final ExamRepository examRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository, ExamRepository examRepository){
+    public StudentServiceImpl(StudentRepository studentRepository, ExamRepository examRepository) {
         this.studentRepository = studentRepository;
         this.examRepository = examRepository;
     }
@@ -32,6 +32,14 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
         return mapToMinimalResponseDTO(student);
+
+    }
+
+    @Override
+    public StudentResponseDTO createStudent(Student student) {
+        Student savedStudent = studentRepository.save(student);
+        return mapToResponseDTO(savedStudent);
+
     }
 
     @Override
@@ -77,7 +85,7 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
-
+    @Override
     public List<StudentMinimalResponseDTO> getAllStudentsMinimal() {
         return studentRepository.findAll()
                 .stream()
@@ -85,6 +93,7 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public StudentResponseDTO addExamToStudent(Long studentId, Long examId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
@@ -114,6 +123,7 @@ public class StudentServiceImpl implements StudentService {
         return mapToResponseDTO(updatedStudent);
     }
 
+    @Override
     public List<Exam> getAllExamsByStudentId(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
@@ -130,6 +140,8 @@ public class StudentServiceImpl implements StudentService {
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
     }
+
+    //utili
 
     private StudentResponseDTO mapToResponseDTO(Student student) {
         StudentResponseDTO dto = new StudentResponseDTO();
