@@ -4,6 +4,7 @@ import com.YronJack.IronWars.dto.exercise.ExerciseRequestDTO;
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
 
 import com.YronJack.IronWars.enums.Dificulty;
+import com.YronJack.IronWars.model.Exercise;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ public interface ExerciseService {
     List<ExerciseResponseDTO> getExercisesByLanguage(Long languageId);
     ExerciseResponseDTO updateExercise(Long id, ExerciseRequestDTO exerciseRequestDTO);
     void deleteExercise(Long id);
+    List<Exercise> getExercisesByDifficultyAndLanguageId(Dificulty difficulty, Long languageId);
+
+
 }

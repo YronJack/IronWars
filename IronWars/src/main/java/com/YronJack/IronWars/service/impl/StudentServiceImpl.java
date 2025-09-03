@@ -25,7 +25,7 @@ public class StudentServiceImpl implements StudentService {
         this.examRepository = examRepository;
     }
 
-    // --- CRUD Estudiante ---
+    // --- CRUD Student ---
 
     @Override
     public StudentResponseDTO createStudent(Student studentRequest) {
@@ -40,14 +40,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentMinimalResponseDTO getStudentById(Long id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
         return mapToMinimalResponseDTO(student);
     }
 
     @Override
     public StudentResponseDTO updateStudent(Long id, Student studentUpdate) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
         student.setNickName(studentUpdate.getNickName());
         student.setAverageScore(studentUpdate.getAverageScore());
         student.setExperienceLevel(studentUpdate.getExperienceLevel());
@@ -78,7 +78,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
         if (!studentRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Estudiante no encontrado con id: " + id);
+            throw new ResourceNotFoundException("Student not found with id: " + id);
         }
         studentRepository.deleteById(id);
     }
@@ -99,17 +99,17 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
-    // --- Gestión de Exámenes ---
+    /* ---Managing of exams --- */
 
     @Override
     public StudentResponseDTO addExamToStudent(Long studentId, Long examId) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + studentId));
         Exam exam = examRepository.findById(examId)
-                .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + examId));
         List<Exam> exams = student.getExamList();
         if (exams.stream().anyMatch(e -> e.getExam_id().equals(examId))) {
-            throw new IllegalArgumentException("El examen ya está asociado al estudiante");
+            throw new IllegalArgumentException("Exam already assigned");
         }
         exams.add(exam);
         student.setExamList(exams);
@@ -120,11 +120,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void removeExamFromStudent(Long studentId, Long examId) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + studentId));
         List<Exam> exams = student.getExamList();
         boolean removed = exams.removeIf(exam -> exam.getExam_id().equals(examId));
         if (!removed) {
-            throw new ResourceNotFoundException("Examen no encontrado con id: " + examId + " para el estudiante");
+            throw new ResourceNotFoundException("Exam not found with id: " + examId + " on this student");
         }
         student.setExamList(exams);
         studentRepository.save(student);
@@ -135,13 +135,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Exam> getAllExamsByStudentId(Long studentId) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + studentId));
         return student.getExamList();
     }
 
 
 
-    // --- Métodos utilitarios privados ---
+    /* --- Utilities private methods --- */
 
     private StudentResponseDTO mapToResponseDTO(Student student) {
         StudentResponseDTO dto = new StudentResponseDTO();
