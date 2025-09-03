@@ -25,17 +25,7 @@ public class StudentServiceImpl implements StudentService {
         this.examRepository = examRepository;
     }
 
-    @Override
-    public StudentMinimalResponseDTO getStudentById(Long id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
-        return mapToMinimalResponseDTO(student); //devolvemos tipo " pelao" pero le decimos que quieremos
-        // OPional
-
-    }
-
-
-
+    // --- CRUD Estudiante ---
 
     @Override
     public StudentResponseDTO createStudent(Student studentRequest) {
@@ -43,22 +33,25 @@ public class StudentServiceImpl implements StudentService {
         student.setNickName(studentRequest.getNickName());
         student.setAverageScore(Score.Null);
         student.setExperienceLevel(0L);
-        // No asignar examList, quedará vacío o null
-
         Student savedStudent = studentRepository.save(student);
         return mapToResponseDTO(savedStudent);
+    }
+
+    @Override
+    public StudentMinimalResponseDTO getStudentById(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
+        return mapToMinimalResponseDTO(student);
     }
 
     @Override
     public StudentResponseDTO updateStudent(Long id, Student studentUpdate) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + id));
-
         student.setNickName(studentUpdate.getNickName());
         student.setAverageScore(studentUpdate.getAverageScore());
         student.setExperienceLevel(studentUpdate.getExperienceLevel());
         student.setExamList(studentUpdate.getExamList());
-
         Student updatedStudent = studentRepository.save(student);
         return mapToResponseDTO(updatedStudent);
     }
@@ -69,7 +62,6 @@ public class StudentServiceImpl implements StudentService {
             throw new ResourceNotFoundException("Estudiante no encontrado con id: " + id);
         }
         studentRepository.deleteById(id);
-
     }
 
     @Override
@@ -87,6 +79,8 @@ public class StudentServiceImpl implements StudentService {
                 .map(this::mapToMinimalResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    // --- Gestión de Exámenes ---
 
     @Override
     public StudentResponseDTO addExamToStudent(Long studentId, Long examId) {
@@ -114,22 +108,15 @@ public class StudentServiceImpl implements StudentService {
             throw new ResourceNotFoundException("Examen no encontrado con id: " + examId + " para el estudiante");
         }
         student.setExamList(exams);
-        Student updatedStudent = studentRepository.save(student);
-
+        studentRepository.save(student);
     }
 
     @Override
     public List<Exam> getAllExamsByStudentId(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + studentId));
-
         return student.getExamList();
     }
-
-//    @Override
-//    public Exam addExamToStudent(Long studentId, Exam exam) {
-//        return null;
-//    }
 
     @Override
     public Exam getExamById(Long studentId, Long examId) {
@@ -141,13 +128,12 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Examen no encontrado con id: " + examId));
     }
 
-    //utili
+    // --- Métodos utilitarios privados ---
 
     private StudentResponseDTO mapToResponseDTO(Student student) {
         StudentResponseDTO dto = new StudentResponseDTO();
         dto.setStudentId(student.getId());
         dto.setNickName(student.getNickName());
-        // Suponiendo que Student hereda de User y User tiene un campo PersonalData
         if (student.getPersonalData() != null) {
             dto.setName(student.getPersonalData().getName());
             dto.setLastName(student.getPersonalData().getLastName());
@@ -168,6 +154,4 @@ public class StudentServiceImpl implements StudentService {
         dto.setExamList(student.getExamList());
         return dto;
     }
-
-
 }
