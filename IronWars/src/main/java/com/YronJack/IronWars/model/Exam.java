@@ -1,18 +1,61 @@
 package com.YronJack.IronWars.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-
+import com.YronJack.IronWars.unums.Score;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+
+import static java.time.LocalTime.now;
+
+
+@Entity
+@Table(name = "exams")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 
 public class Exam {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer exam_id;
+    private Long exam_id;
 
-    @ManyToMany(mappedBy = "exams")
-    private List<Student> students;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Exercise> exercises;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(nullable = false, length =50)
+    @NotNull(message= "The Language is mandatory")
+    private Language language;
+
+    @ManyToOne
+    private Student student;
+
+
+    private LocalTime startTime;
+
+    private LocalTime endTime;
+    @NotNull(message = "Duration is mandatory")
+    private Duration duration;
+
+    @Enumerated(EnumType.STRING)
+    private Score score;
+
+
+    public Exam (Language language, Student student) {
+        this.language = language;
+        this.student = student;
+        this.endTime = null;
+        this.startTime = now();
+        this.duration = Duration.ofMinutes(20);
+
+
+    }
 }
