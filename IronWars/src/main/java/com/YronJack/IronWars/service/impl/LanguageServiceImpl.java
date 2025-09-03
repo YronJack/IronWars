@@ -1,7 +1,12 @@
 package com.YronJack.IronWars.service.impl;
 
+import com.YronJack.IronWars.enums.ExperienceLevel;
 import com.YronJack.IronWars.model.Language;
+import com.YronJack.IronWars.model.Student;
+import com.YronJack.IronWars.model.Teacher;
 import com.YronJack.IronWars.repository.LanguageRepository;
+import com.YronJack.IronWars.repository.StudentRepository;
+import com.YronJack.IronWars.repository.TeacherRepository;
 import com.YronJack.IronWars.service.interfaces.LanguageService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -15,8 +20,15 @@ import java.util.List;
 
 public class LanguageServiceImpl implements LanguageService {
     private final LanguageRepository languageRepository;
-    public LanguageServiceImpl(LanguageRepository languageRepository) {
+    private final TeacherRepository teacherRepository;
+    private final StudentRepository studentRepository;
+    
+    public LanguageServiceImpl(LanguageRepository languageRepository, 
+                              TeacherRepository teacherRepository,
+                              StudentRepository studentRepository) {
         this.languageRepository = languageRepository;
+        this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -47,5 +59,17 @@ public class LanguageServiceImpl implements LanguageService {
     public void delete(Long id) {
         Language existing = getById(id);
         languageRepository.delete(existing);
+    }
+    
+    @Override
+    public List<Teacher> getExpertsByLanguage(Long languageId) {
+        // Validate that the language exists
+        getById(languageId); // This will throw if language doesn't exist
+        return teacherRepository.findByLanguages_Id(languageId);
+    }
+    
+    @Override
+    public List<Student> getStudentsByExperienceLevel(ExperienceLevel level) {
+        return studentRepository.findByExperienceLevel(level);
     }
 }
