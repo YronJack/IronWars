@@ -32,7 +32,7 @@ public class Exam {
     private List<Exercise> exercises;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Column(nullable = false, length =50)
+    @JoinColumn(name = "language_id", nullable = false)
     @NotNull(message= "The Language is mandatory")
     private Language language;
 
