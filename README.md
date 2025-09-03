@@ -111,5 +111,10 @@ CRUD endpoints to manage exams, assign exercises, and evaluate students
 Controller test: with @WebMvcTest (e.g., TeacherControllerTest).
 Service test: with @SpringBootTest or @ExtendWith(MockitoExtension.class) (e.g., ExamServiceImplTest).
 
+## 📊 Presentaciones del Proyecto
+- **[Presentación Completa](./PRESENTACION.md)** - Documentación detallada del proyecto
+- **[Presentación Ejecutiva](./PRESENTACION_EJECUTIVA.md)** - Resumen ejecutivo y características principales
+- **[Presentación Visual](./presentacion.html)** - Presentación HTML interactiva
+
 ## 👥 Authors
 This project was developed by the class team as part of the Backend module.
