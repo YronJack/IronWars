@@ -1,5 +1,6 @@
 package com.YronJack.IronWars.model;
 
+import com.YronJack.IronWars.enums.ExperienceLevel;
 import com.YronJack.IronWars.enums.Score;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,8 @@ public class Student extends User {
     @Enumerated(EnumType.STRING)
     private Score averageScore;
 
-    private Long experienceLevel;
+    @Enumerated(EnumType.STRING)
+    private ExperienceLevel experienceLevel;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exam> examList;

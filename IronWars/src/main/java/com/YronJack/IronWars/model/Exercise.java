@@ -1,10 +1,21 @@
 package com.YronJack.IronWars.model;
 
+import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
 import com.YronJack.IronWars.enums.Dificulty;
 
+import com.YronJack.IronWars.enums.ExperienceLevel;
+import com.YronJack.IronWars.repository.ExerciseRepository;
+import com.YronJack.IronWars.service.impl.ExerciseServiceImpl;
+import com.YronJack.IronWars.service.interfaces.ExerciseService;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.http.ResponseEntity;
+
+import java.lang.reflect.AnnotatedArrayType;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Entity
 @Data
@@ -28,7 +39,7 @@ public class Exercise {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Dificulty difficulty;
+    private Dificulty dificulty;
 
     @ManyToOne
     @JoinColumn(name = "language_id", nullable = false)
@@ -40,6 +51,8 @@ public class Exercise {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -50,4 +63,28 @@ public class Exercise {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+
+    public static List<Exercise> fillExamWithRandomExercises(ExperienceLevel experienceLevel, Long languageId) throws Exception {
+        ExerciseServiceImpl service = new ExerciseServiceImpl();
+        Random rand = new Random();
+        Dificulty difficulty = Dificulty.valueOf(experienceLevel.toString());
+        List<Exercise> randomExercises = service.getExercisesByDifficultyAndLanguageId(difficulty, languageId);
+
+        if (randomExercises.isEmpty()) {
+            throw new Exception("No exercises found");
+        }
+
+        List<Exercise> examReady = new ArrayList<>();
+        List<Exercise> copyList = new ArrayList<>(randomExercises);
+
+        int count = Math.min(10, copyList.size());
+        for (int i = 0; i < count; i++) {
+            int index = rand.nextInt(copyList.size());
+            examReady.add(copyList.remove(index));
+        }
+
+        return examReady;
+    }
+
 }

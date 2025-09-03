@@ -6,6 +6,7 @@ import com.YronJack.IronWars.enums.Dificulty;
 import com.YronJack.IronWars.service.interfaces.ExerciseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.query.derived.AnonymousTupleSqmPathSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
