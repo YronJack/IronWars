@@ -4,9 +4,16 @@ import com.YronJack.IronWars.unums.Score;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import java.security.Timestamp;
+
+
+import java.time.LocalDateTime;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+
+import static java.time.LocalTime.now;
+
 
 @Entity
 @Table(name = "exams")
@@ -21,6 +28,7 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long exam_id;
 
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Exercise> exercises;
 
@@ -32,13 +40,30 @@ public class Exam {
     @ManyToOne
     private Student student;
 
-    private Timestamp startTime;
 
-    private Timestamp endTime;
+
+    private LocalTime startTime;
+
+    private LocalTime endTime;
+
     @NotNull(message = "Duration is mandatory")
     private Duration duration;
 
     @Enumerated(EnumType.STRING)
     private Score score;
 
+
+
+
+
+    public Exam (Language language, Student student) {
+        this.language = language;
+        this.student = student;
+        this.endTime = null;
+        this.startTime = now();
+        this.duration = Duration.ofMinutes(20);
+
+
+    }
 }
+

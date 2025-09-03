@@ -1,13 +1,16 @@
 package com.YronJack.IronWars.service.interfaces;
 
 import com.YronJack.IronWars.model.Exam;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public interface ExamService {
-    Exam getExamById(Long id);
+    Optional<Exam> getExamById(Long id);
     Exam createExam(Exam examRequest);
-    Exam updateExam(Long id, Exam examUpdate);
-    void deleteExam(Long id);
-    List<Exam> getExamsByUsuarioId(Long usuarioId);
+    Optional<Exam> updateExam(Long id, Exam examUpdate);
+    Boolean deleteExam(Long id);
+
 }
