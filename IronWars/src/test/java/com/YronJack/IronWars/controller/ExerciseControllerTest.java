@@ -2,6 +2,7 @@ package com.YronJack.IronWars.controller;
 
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
 import com.YronJack.IronWars.enums.Difficulty;
+import com.YronJack.IronWars.enums.Difficulty;
 import com.YronJack.IronWars.service.interfaces.ExerciseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,9 @@
 package com.YronJack.IronWars.service.impl;
 
 import com.YronJack.IronWars.model.Exam;
+import com.YronJack.IronWars.model.Exercise;
 import com.YronJack.IronWars.repository.ExamRepository;
+import com.YronJack.IronWars.repository.ExerciseRepository;
 import com.YronJack.IronWars.service.interfaces.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamRepository examRepository;
+    
+    @Autowired
+    private ExerciseRepository exerciseRepository;
 
 
     @Override
@@ -46,11 +51,57 @@ public class ExamServiceImpl implements ExamService {
             return true;
         }
         return false;
-
-
     }
-
-
-
-
+    
+    @Override
+    public Optional<Exam> addExerciseToExam(Long examId, Long exerciseId) {
+        Optional<Exam> examOptional = examRepository.findById(examId);
+        Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
+        
+        if (examOptional.isPresent() && exerciseOptional.isPresent()) {
+            Exam exam = examOptional.get();
+            Exercise exercise = exerciseOptional.get();
+            
+            // Initialize exercises list if null
+            if (exam.getExercises() == null) {
+                exam.setExercises(new java.util.ArrayList<>());
+            }
+            
+            // Add exercise only if not already present
+            if (!exam.getExercises().contains(exercise)) {
+                exam.getExercises().add(exercise);
+                return Optional.of(examRepository.save(exam));
+            }
+            return Optional.of(exam);
+        }
+        return Optional.empty();
+    }
+    
+    @Override
+    public Optional<Exam> removeExerciseFromExam(Long examId, Long exerciseId) {
+        Optional<Exam> examOptional = examRepository.findById(examId);
+        Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
+        
+        if (examOptional.isPresent() && exerciseOptional.isPresent()) {
+            Exam exam = examOptional.get();
+            Exercise exercise = exerciseOptional.get();
+            
+            if (exam.getExercises() != null && exam.getExercises().contains(exercise)) {
+                exam.getExercises().remove(exercise);
+                return Optional.of(examRepository.save(exam));
+            }
+            return Optional.of(exam);
+        }
+        return Optional.empty();
+    }
+    
+    @Override
+    public List<Exercise> getExercisesByExamId(Long examId) {
+        Optional<Exam> examOptional = examRepository.findById(examId);
+        if (examOptional.isPresent()) {
+            Exam exam = examOptional.get();
+            return exam.getExercises() != null ? exam.getExercises() : new java.util.ArrayList<>();
+        }
+        return new java.util.ArrayList<>();
+    }
 }
