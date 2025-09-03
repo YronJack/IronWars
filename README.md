@@ -25,7 +25,7 @@ Swagger / OpenAPI (API documentation)
 Postman (endpoint testing)
 
 ## 📂 Project Structure
-
+```
 src/main/java/com.YronJack.IronWars
 │── controller        -> REST controllers
 │── dto               -> Data Transfer Objects (Request/Response DTOs)
@@ -42,17 +42,21 @@ src/main/java/com.YronJack.IronWars
 │   └── impl          -> Service implementations
 │── enums             -> Enums used in the domain (Score, Level...)
 
-
+```
 ## 🚀 How to Run the Project
 
 1. Clone the repository
+```
    git clone https://github.com/your-username/ironwars.git
    cd ironwars
+```
 
-2. Set up the MySQL database
+3. Set up the MySQL database
+```
    CREATE DATABASE ironwars;
-
-3. Configure application.yml (in src/main/resources)
+```
+5. Configure application.yml (in src/main/resources)
+```
    spring:
    datasource:
     url: jdbc:mysql://localhost:3306/ironwars?useSSL=false&serverTimezone=UTC
@@ -65,13 +69,15 @@ src/main/java/com.YronJack.IronWars
     properties:
     hibernate:
     format_sql: true
-
-4. Build and run the project
+```
+7. Build and run the project
+```
    mvn spring-boot:run
-
-6. Open Swagger UI
+```
+9. Open Swagger UI
+```
    http://localhost:8080/swagger-ui/index.html
-
+```
 ## 📬 Main Endpoints
 
 👩‍🏫 Teachers (/teachers)
