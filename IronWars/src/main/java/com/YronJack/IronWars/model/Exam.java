@@ -21,7 +21,6 @@ import static java.time.LocalTime.now;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Exam {
 
     @Id
