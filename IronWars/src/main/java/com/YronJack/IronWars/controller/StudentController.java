@@ -6,6 +6,8 @@ import com.YronJack.IronWars.dto.student.StudentRequestDTO;
 import com.YronJack.IronWars.dto.student.StudentResponseDTO;
 import com.YronJack.IronWars.model.Exam;
 import com.YronJack.IronWars.model.Student;
+import com.YronJack.IronWars.repository.ExamRepository;
+import com.YronJack.IronWars.repository.StudentRepository;
 import com.YronJack.IronWars.service.impl.StudentServiceImpl;
 import com.YronJack.IronWars.service.interfaces.StudentService;
 import jakarta.validation.Valid;
@@ -21,8 +23,13 @@ import java.util.Optional;
 @RequestMapping("/students")
 public class StudentController {
 
-    @Autowired
-    private StudentServiceImpl studentService;
+    private final StudentRepository studentRepository;
+    private final ExamRepository examRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository, ExamRepository examRepository) {
+        this.studentRepository = studentRepository;
+        this.examRepository = examRepository;
+    }
 
    @GetMapping("/{id}")
    public ResponseEntity<StudentMinimalResponseDTO> getStudentById(@PathVariable Long id) {
@@ -42,7 +49,7 @@ public class StudentController {
 
     @GetMapping("/students/list_of_Exams")
     public List<ExamsResponseDTO> getAllExams() {
-        return studentService.getStudentAllStudents();
+        return examsService.getStudentAllStudents();
     }
 
     @PostMapping
