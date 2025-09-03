@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
-    List<Exercise> findByDifficulty(Dificulty difficulty);
+    List<Exercise> findByDificulty(Dificulty dificulty);
     List<Exercise> findByLanguageId(Long languageId);
-    List<Exercise> findByDifficultyAndLanguageId(Dificulty difficulty, Long languageId);
+    List<Exercise> findByDificultyAndLanguageId(Dificulty dificulty, Long languageId);
 }

@@ -57,7 +57,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public List<Exercise> getExercisesByDifficultyAndLanguageId(Dificulty difficulty, Long languageId) {
-        return exerciseRepository.findByDifficultyAndLanguageId(difficulty, languageId);
+        return exerciseRepository.findByDificultyAndLanguageId(difficulty, languageId);
     }
 
     public static List<Exercise> fillExamWithRandomExercises(ExperienceLevel experienceLevel, Long languageId) throws Exception {
