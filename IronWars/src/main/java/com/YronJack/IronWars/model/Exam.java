@@ -1,6 +1,6 @@
 package com.YronJack.IronWars.model;
 
-import com.YronJack.IronWars.enums.Dificulty;
+import com.YronJack.IronWars.enums.Difficulty;
 import com.YronJack.IronWars.enums.Score;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -31,29 +31,26 @@ public class Exam {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Exercise> exercises;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Column(nullable = false, length =50)
-    @NotNull(message= "The Language is mandatory")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "language_id") // o el nombre de la columna FK
+
     private Language language;
 
     @ManyToOne
     private Student student;
 
     @Enumerated(EnumType.STRING)
-    private Dificulty dificulty;
+    private Difficulty dificulty;
 
     private LocalTime startTime;
 
     private LocalTime endTime;
 
     @NotNull(message = "Duration is mandatory")
-    private Duration duration;
+    private int duration;
 
     @Enumerated(EnumType.STRING)
     private Score score;
-
-
-
 
 
     public Exam (Language language, Student student) throws Exception {
@@ -61,9 +58,8 @@ public class Exam {
         this.student = student;
         this.endTime = null;
         this.startTime = now();
-        this.duration = Duration.ofMinutes(20);
+        this.duration = 60;
         this.exercises = new ArrayList<>();
-        this.exercises = Exercise.fillExamWithRandomExercises( student.getExperienceLevel(),language.getId());
     }
 }
 

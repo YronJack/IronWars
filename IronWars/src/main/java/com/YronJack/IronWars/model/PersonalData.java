@@ -29,7 +29,7 @@ public class PersonalData {
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "El email no tiene un formato válido")
     @Size(max = 150, message = "El email no puede tener más de 150 caracteres")
-    @Column(nullable = false, length = 150, unique = true)
+    @Column(nullable = true, length = 150, unique = true)
     private String email;
 
     private String phone;

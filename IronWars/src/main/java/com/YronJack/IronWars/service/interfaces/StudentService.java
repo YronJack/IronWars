@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface StudentService {
     StudentMinimalResponseDTO getStudentById(Long id);
-    StudentResponseDTO createStudent(Student studentRequest);
+    Student createStudent(Student studentRequest);
     void deleteStudent(Long id);
     List<StudentResponseDTO> getStudentAllStudents();
     List<Exam> getAllExamsByStudentId(Long studentId);

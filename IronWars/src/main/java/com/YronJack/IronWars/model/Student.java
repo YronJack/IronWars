@@ -25,8 +25,5 @@ public class Student extends User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exam> examList;
 
-    //Profesor asignado al estudiante
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+
 }
