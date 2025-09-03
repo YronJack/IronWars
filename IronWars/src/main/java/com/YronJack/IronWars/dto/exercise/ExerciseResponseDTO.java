@@ -1,6 +1,6 @@
 package com.YronJack.IronWars.dto.exercise;
 
-import com.YronJack.IronWars.entity.enums.Difficulty;
+import com.YronJack.IronWars.enums.Dificulty;
 import lombok.Data;
 import java.time.LocalDateTime;
 
@@ -11,7 +11,7 @@ public class ExerciseResponseDTO {
     private String description;
     private String starterCode;
     private String solution;
-    private Difficulty difficulty;
+    private Dificulty difficulty;
     private Long languageId;
     private String languageName;
     private LocalDateTime createdAt;

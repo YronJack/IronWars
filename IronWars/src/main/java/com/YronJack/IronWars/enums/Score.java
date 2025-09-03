@@ -1,4 +1,4 @@
-package com.YronJack.IronWars.unums;
+package com.YronJack.IronWars.enums;
 
 public enum Score {
     Excellent,

@@ -1,11 +1,8 @@
 package com.YronJack.IronWars.dto.student;
 
 import com.YronJack.IronWars.model.Exam;
-import com.YronJack.IronWars.unums.Score;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import com.YronJack.IronWars.enums.Score;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;

@@ -8,11 +8,10 @@ import com.YronJack.IronWars.model.Student;
 import com.YronJack.IronWars.repository.ExamRepository;
 import com.YronJack.IronWars.repository.StudentRepository;
 import com.YronJack.IronWars.service.interfaces.StudentService;
-import com.YronJack.IronWars.unums.Score;
+import com.YronJack.IronWars.enums.Score;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

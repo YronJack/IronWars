@@ -3,7 +3,7 @@ package com.YronJack.IronWars.service.interfaces;
 import com.YronJack.IronWars.dto.exercise.ExerciseRequestDTO;
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
 
-import com.YronJack.IronWars.unums.Dificulty;
+import com.YronJack.IronWars.enums.Dificulty;
 
 import java.util.List;
 

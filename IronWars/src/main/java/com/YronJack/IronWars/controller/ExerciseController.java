@@ -2,7 +2,7 @@ package com.YronJack.IronWars.controller;
 
 import com.YronJack.IronWars.dto.exercise.ExerciseRequestDTO;
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
-import com.YronJack.IronWars.unums.Dificulty;
+import com.YronJack.IronWars.enums.Dificulty;
 import com.YronJack.IronWars.service.interfaces.ExerciseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

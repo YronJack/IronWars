@@ -3,10 +3,11 @@ package com.YronJack.IronWars.service.impl;
 import com.YronJack.IronWars.dto.exercise.ExerciseRequestDTO;
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
 import com.YronJack.IronWars.service.interfaces.ExerciseService;
-import com.YronJack.IronWars.unums.Dificulty;
+import com.YronJack.IronWars.enums.Dificulty;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ExerciseServiceImpl implements ExerciseService {
 
     @Override

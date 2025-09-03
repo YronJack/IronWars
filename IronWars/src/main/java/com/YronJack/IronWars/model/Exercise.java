@@ -1,7 +1,6 @@
 package com.YronJack.IronWars.model;
 
-import com.YronJack.IronWars.unums.Dificulty;
-import com.YronJack.IronWars.model.Language;
+import com.YronJack.IronWars.enums.Dificulty;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -41,7 +41,7 @@ public class StudentController {
     }
 
     @GetMapping("/students/list_of_Exams")
-    public List<StudentResponseDTO> getAllStudents() {
+    public List<ExamsResponseDTO> getAllExams() {
         return studentService.getStudentAllStudents();
     }
 

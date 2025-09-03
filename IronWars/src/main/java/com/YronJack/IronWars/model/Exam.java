@@ -1,14 +1,12 @@
 package com.YronJack.IronWars.model;
 
-import com.YronJack.IronWars.unums.Score;
+import com.YronJack.IronWars.enums.Score;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
-import java.time.LocalDateTime;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.YronJack.IronWars.model;
 
-import com.YronJack.IronWars.unums.Score;
+import com.YronJack.IronWars.enums.Score;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

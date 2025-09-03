@@ -1,7 +1,7 @@
 package com.YronJack.IronWars.repository;
 
 import com.YronJack.IronWars.model.Exercise;
-import com.YronJack.IronWars.unums.Dificulty;
+import com.YronJack.IronWars.enums.Dificulty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
