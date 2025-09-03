@@ -1,7 +1,7 @@
 package com.YronJack.IronWars.controller;
 
 import com.YronJack.IronWars.dto.exercise.ExerciseResponseDTO;
-import com.YronJack.IronWars.enums.Dificulty;
+import com.YronJack.IronWars.enums.Difficulty;
 import com.YronJack.IronWars.service.interfaces.ExerciseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +51,7 @@ class ExerciseControllerTest {
         exercise1.setDescription("Write a program that prints numbers from 1 to 100");
         exercise1.setStarterCode("public class FizzBuzz { }");
         exercise1.setSolution("// Solution here");
-        exercise1.setDifficulty(Dificulty.Beginner);
+        exercise1.setDifficulty(Difficulty.Beginner);
         exercise1.setLanguageId(1L);
         exercise1.setLanguageName("Java");
         exercise1.setCreatedAt(LocalDateTime.now().minusDays(1));
@@ -63,7 +63,7 @@ class ExerciseControllerTest {
         exercise2.setDescription("Implement binary search algorithm");
         exercise2.setStarterCode("public class BinarySearch { }");
         exercise2.setSolution("// Binary search solution");
-        exercise2.setDifficulty(Dificulty.Junior);
+        exercise2.setDifficulty(Difficulty.Junior);
         exercise2.setLanguageId(1L);
         exercise2.setLanguageName("Java");
         exercise2.setCreatedAt(LocalDateTime.now().minusDays(2));
@@ -75,7 +75,7 @@ class ExerciseControllerTest {
         exercise3.setDescription("Optimize Fibonacci sequence using dynamic programming");
         exercise3.setStarterCode("def fibonacci(n): pass");
         exercise3.setSolution("# DP solution here");
-        exercise3.setDifficulty(Dificulty.Senior);
+        exercise3.setDifficulty(Difficulty.Senior);
         exercise3.setLanguageId(2L);
         exercise3.setLanguageName("Python");
         exercise3.setCreatedAt(LocalDateTime.now().minusDays(3));
@@ -89,9 +89,9 @@ class ExerciseControllerTest {
     void getExercisesByDifficulty_Beginner_ShouldReturn200WithBeginnerExercises() throws Exception {
         // Arrange
         List<ExerciseResponseDTO> beginnerExercises = mockExercises.stream()
-                .filter(ex -> ex.getDifficulty() == Dificulty.Beginner)
+                .filter(ex -> ex.getDifficulty() == Difficulty.Beginner)
                 .toList();
-        when(exerciseService.getExercisesByDifficulty(Dificulty.Beginner))
+        when(exerciseService.getExercisesByDifficulty(Difficulty.Beginner))
                 .thenReturn(beginnerExercises);
 
         // Act & Assert
@@ -106,7 +106,7 @@ class ExerciseControllerTest {
                 .andExpect(jsonPath("$[0].languageId", is(1)))
                 .andExpect(jsonPath("$[0].languageName", is("Java")));
 
-        verify(exerciseService).getExercisesByDifficulty(Dificulty.Beginner);
+        verify(exerciseService).getExercisesByDifficulty(Difficulty.Beginner);
     }
 
     @Test
@@ -114,9 +114,9 @@ class ExerciseControllerTest {
     void getExercisesByDifficulty_Junior_ShouldReturn200WithJuniorExercises() throws Exception {
         // Arrange
         List<ExerciseResponseDTO> juniorExercises = mockExercises.stream()
-                .filter(ex -> ex.getDifficulty() == Dificulty.Junior)
+                .filter(ex -> ex.getDifficulty() == Difficulty.Junior)
                 .toList();
-        when(exerciseService.getExercisesByDifficulty(Dificulty.Junior))
+        when(exerciseService.getExercisesByDifficulty(Difficulty.Junior))
                 .thenReturn(juniorExercises);
 
         // Act & Assert
@@ -131,7 +131,7 @@ class ExerciseControllerTest {
                 .andExpect(jsonPath("$[0].languageId", is(1)))
                 .andExpect(jsonPath("$[0].languageName", is("Java")));
 
-        verify(exerciseService).getExercisesByDifficulty(Dificulty.Junior);
+        verify(exerciseService).getExercisesByDifficulty(Difficulty.Junior);
     }
 
     @Test
@@ -139,9 +139,9 @@ class ExerciseControllerTest {
     void getExercisesByDifficulty_Senior_ShouldReturn200WithSeniorExercises() throws Exception {
         // Arrange
         List<ExerciseResponseDTO> seniorExercises = mockExercises.stream()
-                .filter(ex -> ex.getDifficulty() == Dificulty.Senior)
+                .filter(ex -> ex.getDifficulty() == Difficulty.Senior)
                 .toList();
-        when(exerciseService.getExercisesByDifficulty(Dificulty.Senior))
+        when(exerciseService.getExercisesByDifficulty(Difficulty.Senior))
                 .thenReturn(seniorExercises);
 
         // Act & Assert
@@ -156,14 +156,14 @@ class ExerciseControllerTest {
                 .andExpect(jsonPath("$[0].languageId", is(2)))
                 .andExpect(jsonPath("$[0].languageName", is("Python")));
 
-        verify(exerciseService).getExercisesByDifficulty(Dificulty.Senior);
+        verify(exerciseService).getExercisesByDifficulty(Difficulty.Senior);
     }
 
     @Test
     @DisplayName("GET /api/exercises/difficulty/Master should return 200 with empty list when no master exercises")
     void getExercisesByDifficulty_Master_ShouldReturn200WithEmptyList() throws Exception {
         // Arrange
-        when(exerciseService.getExercisesByDifficulty(Dificulty.Master))
+        when(exerciseService.getExercisesByDifficulty(Difficulty.Master))
                 .thenReturn(Collections.emptyList());
 
         // Act & Assert
@@ -173,7 +173,7 @@ class ExerciseControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(0)));
 
-        verify(exerciseService).getExercisesByDifficulty(Dificulty.Master);
+        verify(exerciseService).getExercisesByDifficulty(Difficulty.Master);
     }
 
     @Test
@@ -281,9 +281,9 @@ class ExerciseControllerTest {
     void getExercisesByDifficulty_Beginner_ShouldVerifyResponseStructure() throws Exception {
         // Arrange
         List<ExerciseResponseDTO> beginnerExercises = mockExercises.stream()
-                .filter(ex -> ex.getDifficulty() == Dificulty.Beginner)
+                .filter(ex -> ex.getDifficulty() == Difficulty.Beginner)
                 .toList();
-        when(exerciseService.getExercisesByDifficulty(Dificulty.Beginner))
+        when(exerciseService.getExercisesByDifficulty(Difficulty.Beginner))
                 .thenReturn(beginnerExercises);
 
         // Act & Assert
@@ -301,7 +301,7 @@ class ExerciseControllerTest {
                 .andExpect(jsonPath("$[0].createdAt", notNullValue()))
                 .andExpect(jsonPath("$[0].updatedAt", notNullValue()));
 
-        verify(exerciseService).getExercisesByDifficulty(Dificulty.Beginner);
+        verify(exerciseService).getExercisesByDifficulty(Difficulty.Beginner);
     }
 
     @Test
