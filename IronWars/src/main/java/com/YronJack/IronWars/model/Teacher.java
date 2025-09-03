@@ -2,6 +2,7 @@ package com.YronJack.IronWars.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Teacher extends User {
+
     private Integer yearsExperience;
+
     private Double rating;
 
     @ManyToMany(mappedBy = "teachers")
-    private List<Student> students;
+    private List<Language> languages;
+
+    //Alumnos tutorizados
+    @OneToMany(mappedBy = "teacher")
+    private List <Student> students;
+
 
 }
